@@ -18,7 +18,7 @@ class SvgParser {
   Color parseColor(String? cStr) {
     if (cStr == null || cStr.isEmpty) throw UnsupportedError("Empty color field found.");
     if (cStr[0] == '#') {
-      return new Color(int.parse(cStr.substring(1), radix: 16))
+      return  Color(int.parse(cStr.substring(1), radix: 16))
           .withOpacity(1.0); // Hex to int: from https://stackoverflow.com/a/51290420/9452450
     } else if (cStr == 'none') {
       return Colors.transparent;
@@ -51,8 +51,7 @@ class SvgParser {
   void loadFromString(String svgString) {
     this._pathSegments.clear();
     int index = 0; //number of parsed path elements
-    var doc = xml.parse(svgString);
-    //TODO For now only <path> tags are considered for parsing (add circle, rect, arcs etc.)
+    var doc = xml.XmlDocument.parse(svgString);
     doc.findAllElements("path").map((node) => node.attributes).forEach((attributes) {
       xml.XmlAttribute? dPath;
       try {
@@ -62,8 +61,8 @@ class SvgParser {
       }
 
       if (dPath != null) {
-        Path path = new Path();
-        writeSvgPathDataToPath(dPath.value, new PathModifier(path));
+        Path path =  Path();
+        writeSvgPathDataToPath(dPath.value,  PathModifier(path));
 
         Color? color;
         double? strokeWidth;
